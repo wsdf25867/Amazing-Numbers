@@ -11,8 +11,8 @@ public class Number {
     private final boolean isBuzz;
     private final boolean isDuck;
     private final boolean isPalindromic;
-
     private final boolean isGapful;
+    private final boolean isSpy;
 
     public Number(long value) {
         this.value = value;
@@ -22,6 +22,17 @@ public class Number {
         this.isDuck = String.valueOf(this.value).contains("0");
         this.isPalindromic = isPalindromic();
         this.isGapful = isGapful();
+        this.isSpy = isSpy();
+    }
+    private boolean isSpy() {
+        String[] splitValue = String.valueOf(this.value).split("");
+        long sum = 0;
+        long mul = 1;
+        for (String s : splitValue) {
+            sum += Long.parseLong(s);
+            mul *= Long.parseLong(s);
+        }
+        return sum == mul;
     }
 
     private boolean isGapful() {
@@ -55,10 +66,11 @@ public class Number {
                 duck: %b
                 palindromic: %b
                 gapful: %b
+                spy: %b
                 even: %b
                 odd: %b
                                     
-                """, value, isBuzz, isDuck, isPalindromic, isGapful, isEven, isOdd);
+                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy,isEven, isOdd);
     }
 
     public void printSimply() {
@@ -75,6 +87,9 @@ public class Number {
         if (isGapful) {
             array.add("gapful");
         }
+        if (isSpy) {
+            array.add("spy");
+        }
         if (isEven) {
             array.add("even");
         } else {
@@ -82,5 +97,9 @@ public class Number {
         }
         String result = String.join(", ", array);
         System.out.printf("%d is %s\n", value, result);
+    }
+
+    public Long get() {
+        return this.value;
     }
 }

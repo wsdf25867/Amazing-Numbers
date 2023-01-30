@@ -5,9 +5,14 @@ import java.util.List;
 
 public class Numbers {
 
-    private final List<Number> numbers = new ArrayList<>();
+    private final List<Number> numbers;
 
     private Numbers() {
+        numbers = new ArrayList<>();
+    }
+
+    public Numbers(List<Number> instance) {
+        numbers = instance;
     }
 
     public static Numbers of(long start, long count) {
@@ -19,8 +24,14 @@ public class Numbers {
     }
 
     public static Numbers of(long start, long count, String property) {
-        Numbers instance = new Numbers();
-
+        List<Number> instance = new ArrayList<>();
+        long preNum = start;
+        while (instance.size() < count) {
+            Number number = NumberGenerator.generate(preNum, property);
+            instance.add(number);
+            preNum = number.get()+1;
+        }
+        return new Numbers(instance);
     }
 
     private void add(Number number) {

@@ -14,7 +14,8 @@ public class Main {
                 - enter a natural number to know its properties;
                 - enter two natural numbers to obtain the properties of the list:
                   * the first parameter represents a starting number;
-                  * the second parameter shows how many consecutive numbers are to be processed;
+                  * the second parameter shows how many consecutive numbers are to be printed;
+                - two natural numbers and a property to search for;
                 - separate the parameters with one space;
                 - enter 0 to exit.
                 
@@ -28,9 +29,8 @@ public class Main {
             }
             if (value.length == 3) {
                 Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2]);
-
-            }
-            if (value.length == 2) {
+                numbers.print();
+            } else if (value.length == 2) {
                 Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]));
                 numbers.print();
             } else {
