@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/Amazing Numbers/task/build/
+/Amazing Numbers/task/out/
+/Amazing Numbers/task/out/production/classes/
