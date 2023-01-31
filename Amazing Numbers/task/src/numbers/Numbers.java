@@ -34,6 +34,16 @@ public class Numbers {
         return new Numbers(instance);
     }
 
+    public static Numbers of(long start, long count, String firstProperty, String secondProperty) {
+        List<Number> instance = new ArrayList<>();
+        long preNum = start;
+        while (instance.size() < count) {
+            Number number = NumberGenerator.generate(preNum, firstProperty, secondProperty);
+            instance.add(number);
+            preNum = number.get()+1;
+        }
+        return new Numbers(instance);
+    }
     private void add(Number number) {
         numbers.add(number);
     }

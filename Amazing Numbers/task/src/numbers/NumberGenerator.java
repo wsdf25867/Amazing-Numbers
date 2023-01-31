@@ -3,21 +3,30 @@ package numbers;
 public class NumberGenerator {
 
     public static Number generate(Long start, String property) {
-        switch (property) {
-            case "even": case "EVEN":
-                return makeEven(start);
-            case "odd": case "ODD":
-                return makeOdd(start);
-            case "buzz": case "BUZZ":
-                return makeBuzz(start);
-            case "duck": case "DUCK":
-                return makeDuck(start);
-            case "palindromic": case "PALINDROMIC":
-                return makePalindromic(start);
-            case "gapful": case "GAPFUL":
-                return makeGapful(start);
-            case "spy": case "SPY":
-                return makeSpy(start);
+        return switch (property) {
+            case "even", "EVEN" -> makeEven(start);
+            case "odd", "ODD" -> makeOdd(start);
+            case "buzz", "BUZZ" -> makeBuzz(start);
+            case "duck", "DUCK" -> makeDuck(start);
+            case "palindromic", "PALINDROMIC" -> makePalindromic(start);
+            case "gapful", "GAPFUL" -> makeGapful(start);
+            case "spy", "SPY" -> makeSpy(start);
+            case "square", "SQUARE" -> makeSquare(start);
+            case "sunny", "SUNNY" -> makeSunny(start);
+            default -> null;
+        };
+    }
+
+    private static Number makeSunny(Long start) {
+        for (long value = start; value < Long.MAX_VALUE; value++) {
+            if (isSunny(value)) return new Number(value);
+        }
+        return null;
+    }
+
+    private static Number makeSquare(Long start) {
+        for (long value = start; value < Long.MAX_VALUE; value++) {
+            if (isSquare(value)) return new Number(value);
         }
         return null;
     }
@@ -71,6 +80,14 @@ public class NumberGenerator {
         return null;
     }
 
+    private static boolean isSunny(long value) {
+        return Math.sqrt(value + 1) % 1 == 0;
+    }
+
+    private static boolean isSquare(long value) {
+        return Math.sqrt(value) % 1 == 0;
+    }
+
     private static boolean isSpy(long value) {
         String[] splitValue = String.valueOf(value).split("");
         long sum = 0;
@@ -88,11 +105,7 @@ public class NumberGenerator {
         }
         String temp = String.valueOf(String.valueOf(value).charAt(0)) + value % 10;
         long tempLong = Long.parseLong(temp);
-        if (value % tempLong == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return value % tempLong == 0;
     }
 
     private static boolean isPalindromic(long value) {
@@ -103,5 +116,14 @@ public class NumberGenerator {
             }
         }
         return true;
+    }
+
+    public static Number generate(long start, String firstProperty, String secondProperty) {
+        for (long i = start; i < Long.MAX_VALUE; i++) {
+            if (Property.valueOf(firstProperty).check(i) && Property.valueOf(secondProperty).check(i)) {
+                return new Number(i);
+            }
+        }
+        return null;
     }
 }

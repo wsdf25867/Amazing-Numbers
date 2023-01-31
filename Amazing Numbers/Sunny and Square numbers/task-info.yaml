@@ -898,6 +898,235 @@ files:
         enum Parameter {ONE, TWO, THREE}
     }
   learner_created: false
+- name: src/numbers/Numbers.java
+  visible: true
+  text: |
+    package numbers;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class Numbers {
+
+        private final List<Number> numbers;
+
+        private Numbers() {
+            numbers = new ArrayList<>();
+        }
+
+        public Numbers(List<Number> instance) {
+            numbers = instance;
+        }
+
+        public static Numbers of(long start, long count) {
+            Numbers instance = new Numbers();
+            for (int i = 0; i < count; i++) {
+                instance.add(new Number(start + i));
+            }
+            return instance;
+        }
+
+        public static Numbers of(long start, long count, String property) {
+            List<Number> instance = new ArrayList<>();
+            long preNum = start;
+            while (instance.size() < count) {
+                Number number = NumberGenerator.generate(preNum, property);
+                instance.add(number);
+                preNum = number.get()+1;
+            }
+            return new Numbers(instance);
+        }
+
+        private void add(Number number) {
+            numbers.add(number);
+        }
+
+        public void print() {
+            for (Number number : numbers) {
+                number.printSimply();
+            }
+        }
+    }
+  learner_created: true
+- name: src/numbers/Property.java
+  visible: true
+  text: |
+    package numbers;
+
+    public enum Property {
+        BUZZ,
+        DUCK,
+        PALINDROMIC,
+        GAPFUL,
+        SPY,
+        EVEN,
+        ODD;
+
+        public static boolean contains(String property) {
+            for (Property value : Property.values()) {
+                if (property.equals(value.name())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+  learner_created: true
+- name: src/numbers/NumberGenerator.java
+  visible: true
+  text: |
+    package numbers;
+
+    public class NumberGenerator {
+
+        public static Number generate(Long start, String property) {
+            switch (property) {
+                case "even": case "EVEN":
+                    return makeEven(start);
+                case "odd": case "ODD":
+                    return makeOdd(start);
+                case "buzz": case "BUZZ":
+                    return makeBuzz(start);
+                case "duck": case "DUCK":
+                    return makeDuck(start);
+                case "palindromic": case "PALINDROMIC":
+                    return makePalindromic(start);
+                case "gapful": case "GAPFUL":
+                    return makeGapful(start);
+                case "spy": case "SPY":
+                    return makeSpy(start);
+            }
+            return null;
+        }
+
+        private static Number makeSpy(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (isSpy(value)) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makeGapful(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (isGapful(value)) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makePalindromic(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (isPalindromic(value)) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makeBuzz(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (value % 10 == 7 || value % 7 == 0) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makeDuck(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (String.valueOf(value).contains("0")) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makeOdd(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (value % 2 == 1) return new Number(value);
+            }
+            return null;
+        }
+
+        private static Number makeEven(Long start) {
+            for (long value = start; value < Long.MAX_VALUE; value++) {
+                if (value % 2 == 0) return new Number(value);
+            }
+            return null;
+        }
+
+        private static boolean isSpy(long value) {
+            String[] splitValue = String.valueOf(value).split("");
+            long sum = 0;
+            long mul = 1;
+            for (String s : splitValue) {
+                sum += Long.parseLong(s);
+                mul *= Long.parseLong(s);
+            }
+            return sum == mul;
+        }
+
+        private static boolean isGapful(long value) {
+            if (value < 100) {
+                return false;
+            }
+            String temp = String.valueOf(String.valueOf(value).charAt(0)) + value % 10;
+            long tempLong = Long.parseLong(temp);
+            if (value % tempLong == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private static boolean isPalindromic(long value) {
+            String number = String.valueOf(value);
+            for (int i = 0; i < number.length() / 2; i++) {
+                if (number.charAt(i) != number.charAt(number.length() - 1 - i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+  learner_created: true
+- name: src/numbers/Number.java
+  visible: true
+  text: "package numbers;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\
+    import java.util.Stack;\n\npublic class Number {\n    private final long value;\n\
+    \    private final boolean isEven;\n    private final boolean isOdd;\n    private\
+    \ final boolean isBuzz;\n    private final boolean isDuck;\n    private final\
+    \ boolean isPalindromic;\n    private final boolean isGapful;\n    private final\
+    \ boolean isSpy;\n\n    public Number(long value) {\n        this.value = value;\n\
+    \        this.isEven = value % 2 == 0;\n        this.isOdd = !isEven;\n      \
+    \  this.isBuzz = value % 10 == 7 || value % 7 == 0;\n        this.isDuck = String.valueOf(this.value).contains(\"\
+    0\");\n        this.isPalindromic = isPalindromic();\n        this.isGapful =\
+    \ isGapful();\n        this.isSpy = isSpy();\n    }\n    private boolean isSpy()\
+    \ {\n        String[] splitValue = String.valueOf(this.value).split(\"\");\n \
+    \       long sum = 0;\n        long mul = 1;\n        for (String s : splitValue)\
+    \ {\n            sum += Long.parseLong(s);\n            mul *= Long.parseLong(s);\n\
+    \        }\n        return sum == mul;\n    }\n\n    private boolean isGapful()\
+    \ {\n        if (this.value < 100) {\n            return false;\n        }\n \
+    \       String temp = String.valueOf(String.valueOf(this.value).charAt(0)) + value\
+    \ % 10;\n        long tempLong = Long.parseLong(temp);\n        if (value % tempLong\
+    \ == 0) {\n            return true;\n        } else {\n            return false;\n\
+    \        }\n    }\n\n    private boolean isPalindromic() {\n        String number\
+    \ = String.valueOf(this.value);\n        for (int i = 0; i < number.length() /\
+    \ 2; i++) {\n            if (number.charAt(i) != number.charAt(number.length()\
+    \ - 1 - i)) {\n                return false;\n            }\n        }\n     \
+    \   return true;\n    }\n\n\n    public void print() {\n        System.out.printf(\"\
+    \"\"\n                Properties of %d\n                buzz: %b\n           \
+    \     duck: %b\n                palindromic: %b\n                gapful: %b\n\
+    \                spy: %b\n                even: %b\n                odd: %b\n\
+    \                                    \n                \"\"\", value, isBuzz,\
+    \ isDuck, isPalindromic, isGapful, isSpy,isEven, isOdd);\n    }\n\n    public\
+    \ void printSimply() {\n        List<String> array = new ArrayList<>();\n    \
+    \    if (isBuzz) {\n            array.add(\"buzz\");\n        }\n        if (isDuck)\
+    \ {\n            array.add(\"duck\");\n        }\n        if (isPalindromic) {\n\
+    \            array.add(\"palindromic\");\n        }\n        if (isGapful) {\n\
+    \            array.add(\"gapful\");\n        }\n        if (isSpy) {\n       \
+    \     array.add(\"spy\");\n        }\n        if (isEven) {\n            array.add(\"\
+    even\");\n        } else {\n            array.add(\"odd\");\n        }\n     \
+    \   String result = String.join(\", \", array);\n        System.out.printf(\"\
+    %d is %s\\n\", value, result);\n    }\n\n    public Long get() {\n        return\
+    \ this.value;\n    }\n}\n"
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13203#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Tue, 31 Jan 2023 08:19:15 UTC"
 record: -1

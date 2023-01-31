@@ -2,8 +2,6 @@ package numbers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-
 public class Number {
     private final long value;
     private final boolean isEven;
@@ -13,6 +11,8 @@ public class Number {
     private final boolean isPalindromic;
     private final boolean isGapful;
     private final boolean isSpy;
+    private final boolean isSquare;
+    private final boolean isSunny;
 
     public Number(long value) {
         this.value = value;
@@ -23,6 +23,15 @@ public class Number {
         this.isPalindromic = isPalindromic();
         this.isGapful = isGapful();
         this.isSpy = isSpy();
+        this.isSquare = isSquare();
+        this.isSunny = isSunny();
+    }
+
+    private boolean isSunny() {
+        return Math.sqrt(this.value+1) % 1 == 0;
+    }
+    private boolean isSquare() {
+        return Math.sqrt(this.value) % 1 == 0;
     }
     private boolean isSpy() {
         String[] splitValue = String.valueOf(this.value).split("");
@@ -41,11 +50,7 @@ public class Number {
         }
         String temp = String.valueOf(String.valueOf(this.value).charAt(0)) + value % 10;
         long tempLong = Long.parseLong(temp);
-        if (value % tempLong == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return value % tempLong == 0;
     }
 
     private boolean isPalindromic() {
@@ -67,10 +72,12 @@ public class Number {
                 palindromic: %b
                 gapful: %b
                 spy: %b
+                square: %b
+                sunny: %b
                 even: %b
                 odd: %b
                                     
-                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy,isEven, isOdd);
+                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy, isSquare, isSunny, isEven, isOdd);
     }
 
     public void printSimply() {
@@ -89,6 +96,12 @@ public class Number {
         }
         if (isSpy) {
             array.add("spy");
+        }
+        if (isSquare) {
+            array.add("square");
+        }
+        if (isSunny) {
+            array.add("sunny");
         }
         if (isEven) {
             array.add("even");
