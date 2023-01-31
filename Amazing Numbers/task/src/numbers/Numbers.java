@@ -22,7 +22,6 @@ public class Numbers {
         }
         return instance;
     }
-
     public static Numbers of(long start, long count, String property) {
         List<Number> instance = new ArrayList<>();
         long preNum = start;
@@ -44,10 +43,21 @@ public class Numbers {
         }
         return new Numbers(instance);
     }
+
+    public static Numbers of(long start, long count, String firstProperty, String secondProperty, String thirdProperty) {
+        List<Number> instance = new ArrayList<>();
+        long preNum = start;
+        while (instance.size() < count) {
+            Number number = NumberGenerator.generate(preNum, firstProperty, secondProperty, thirdProperty);
+            instance.add(number);
+            preNum = number.get()+1;
+        }
+        return new Numbers(instance);
+    }
+
     private void add(Number number) {
         numbers.add(number);
     }
-
     public void print() {
         for (Number number : numbers) {
             number.printSimply();

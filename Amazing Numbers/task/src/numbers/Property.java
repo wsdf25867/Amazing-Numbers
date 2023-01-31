@@ -30,17 +30,30 @@ public enum Property {
                 long product = 1;
                 long lastdigit;
                 while (value > 0) {
-                    lastdigit=value%10;
-                    sum=sum+lastdigit;
-                    product=product*lastdigit;
-                    value=value/10;
+                    lastdigit = value % 10;
+                    sum = sum + lastdigit;
+                    product = product * lastdigit;
+                    value = value / 10;
                 }
                 return sum == product;
             }),
     EVEN("even", value -> value % 2 == 0),
     ODD("odd", value -> value % 2 == 1),
     SQUARE("square", value -> Math.sqrt(value) % 1 == 0),
-    SUNNY("sunny", value -> Math.sqrt(value + 1) % 1 == 0);
+    SUNNY("sunny", value -> Math.sqrt(value + 1) % 1 == 0),
+    JUMPING("jumping",
+            value -> {
+                long digit;
+                long temp;
+                while (value != 0) {
+                    if (value <= 10) return true;
+                    digit = value % 10;
+                    temp = (value / 10) % 10;
+                    if (Math.abs(digit - temp) != 1) return false;
+                    value /= 10;
+                }
+                return true;
+            });
 
     private final String lowerCase;
     private final Predicate<Long> predicate;

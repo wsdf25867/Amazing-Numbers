@@ -3,7 +3,6 @@ package numbers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class Main {
@@ -31,11 +30,14 @@ public class Main {
             if (!validate(value)) {
                 continue;
             }
-            if (value.length == 4) {
+            if (value.length == 5) {
+                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase(), value[4].toUpperCase());
+                numbers.print();
+            }else if (value.length == 4) {
                 Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase());
                 numbers.print();
             } else if (value.length == 3) {
-                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2]);
+                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase());
                 numbers.print();
             } else if (value.length == 2) {
                 Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]));
@@ -60,7 +62,7 @@ public class Main {
         }
         if (value.length == 3 && !Property.contains(value[2])) {
             System.out.printf("The property [%s] is wrong.\n", value[2]);
-            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
+            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
             return false;
         }
         if (value.length == 4) {
@@ -69,11 +71,11 @@ public class Main {
             if (!Property.contains(value[3])) array.add(value[3]);
             if (array.size() == 2) {
                 System.out.printf("The properties [%s] are wrong.\n", String.join(", ", array));
-                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
+                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
                 return false;
             } else if (array.size() == 1) {
                 System.out.printf("The property [%s] is wrong.\n", String.join(", ", array));
-                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY]");
+                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
                 return false;
             } else {
                 String master = value[2].toUpperCase() + value[3].toUpperCase();

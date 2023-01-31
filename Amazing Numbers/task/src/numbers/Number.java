@@ -13,57 +13,21 @@ public class Number {
     private final boolean isSpy;
     private final boolean isSquare;
     private final boolean isSunny;
+    private final boolean isJumping;
 
     public Number(long value) {
         this.value = value;
-        this.isEven = value % 2 == 0;
-        this.isOdd = !isEven;
-        this.isBuzz = value % 10 == 7 || value % 7 == 0;
-        this.isDuck = String.valueOf(this.value).contains("0");
-        this.isPalindromic = isPalindromic();
-        this.isGapful = isGapful();
-        this.isSpy = isSpy();
-        this.isSquare = isSquare();
-        this.isSunny = isSunny();
+        this.isEven = Property.EVEN.check(this.value);
+        this.isOdd = Property.ODD.check(this.value);
+        this.isBuzz = Property.BUZZ.check(this.value);
+        this.isDuck = Property.DUCK.check(this.value);
+        this.isPalindromic = Property.PALINDROMIC.check(this.value);
+        this.isGapful = Property.GAPFUL.check(this.value);
+        this.isSpy = Property.SPY.check(this.value);
+        this.isSquare = Property.SQUARE.check(this.value);
+        this.isSunny = Property.SUNNY.check(this.value);
+        this.isJumping = Property.JUMPING.check(this.value);
     }
-
-    private boolean isSunny() {
-        return Math.sqrt(this.value+1) % 1 == 0;
-    }
-    private boolean isSquare() {
-        return Math.sqrt(this.value) % 1 == 0;
-    }
-    private boolean isSpy() {
-        String[] splitValue = String.valueOf(this.value).split("");
-        long sum = 0;
-        long mul = 1;
-        for (String s : splitValue) {
-            sum += Long.parseLong(s);
-            mul *= Long.parseLong(s);
-        }
-        return sum == mul;
-    }
-
-    private boolean isGapful() {
-        if (this.value < 100) {
-            return false;
-        }
-        String temp = String.valueOf(String.valueOf(this.value).charAt(0)) + value % 10;
-        long tempLong = Long.parseLong(temp);
-        return value % tempLong == 0;
-    }
-
-    private boolean isPalindromic() {
-        String number = String.valueOf(this.value);
-        for (int i = 0; i < number.length() / 2; i++) {
-            if (number.charAt(i) != number.charAt(number.length() - 1 - i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public void print() {
         System.out.printf("""
                 Properties of %d
@@ -74,12 +38,12 @@ public class Number {
                 spy: %b
                 square: %b
                 sunny: %b
+                jumping: %b
                 even: %b
                 odd: %b
                                     
-                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy, isSquare, isSunny, isEven, isOdd);
+                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy, isSquare, isSunny, isJumping, isEven, isOdd);
     }
-
     public void printSimply() {
         List<String> array = new ArrayList<>();
         if (isBuzz) {
@@ -102,6 +66,9 @@ public class Number {
         }
         if (isSunny) {
             array.add("sunny");
+        }
+        if (isJumping) {
+            array.add("jumping");
         }
         if (isEven) {
             array.add("even");
