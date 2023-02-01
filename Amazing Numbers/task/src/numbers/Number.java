@@ -14,6 +14,8 @@ public class Number {
     private final boolean isSquare;
     private final boolean isSunny;
     private final boolean isJumping;
+    private final boolean isHappy;
+    private final boolean isSad;
 
     public Number(long value) {
         this.value = value;
@@ -27,6 +29,8 @@ public class Number {
         this.isSquare = Property.SQUARE.check(this.value);
         this.isSunny = Property.SUNNY.check(this.value);
         this.isJumping = Property.JUMPING.check(this.value);
+        this.isHappy = Property.HAPPY.check(this.value);
+        this.isSad = Property.SAD.check(this.value);
     }
     public void print() {
         System.out.printf("""
@@ -39,10 +43,12 @@ public class Number {
                 square: %b
                 sunny: %b
                 jumping: %b
+                happy: %b
+                sad: %b
                 even: %b
                 odd: %b
                                     
-                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy, isSquare, isSunny, isJumping, isEven, isOdd);
+                """, value, isBuzz, isDuck, isPalindromic, isGapful, isSpy, isSquare, isSunny, isJumping, isHappy, isSad, isEven, isOdd);
     }
     public void printSimply() {
         List<String> array = new ArrayList<>();
@@ -69,6 +75,12 @@ public class Number {
         }
         if (isJumping) {
             array.add("jumping");
+        }
+        if (isHappy) {
+            array.add("Happy");
+        }
+        if (isSad) {
+            array.add("sad");
         }
         if (isEven) {
             array.add("even");

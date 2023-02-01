@@ -13,12 +13,12 @@ public class Main {
                 Welcome to Amazing Numbers!
                                 
                 Supported requests:
-                - enter a natural number to know its properties;\s
+                - enter a natural number to know its properties;
                 - enter two natural numbers to obtain the properties of the list:
                   * the first parameter represents a starting number;
                   * the second parameter shows how many consecutive numbers are to be printed;
-                - two natural numbers and a property to search for;
-                - two natural numbers and two properties to search for;
+                - two natural numbers and properties to search for;
+                - a property preceded by minus must not be present in numbers;
                 - separate the parameters with one space;
                 - enter 0 to exit.
                                 
@@ -53,7 +53,7 @@ public class Main {
         }
         if (value.length == 3 && !Property.contains(value[2])) {
             System.out.printf("The property [%s] is wrong.\n", value[2]);
-            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
+            System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING HAPPY, SAD]");
             return false;
         }
         if (value.length >= 4) {
@@ -63,11 +63,11 @@ public class Main {
             }
             if (array.size() >= 2) {
                 System.out.printf("The properties [%s] are wrong.\n", String.join(", ", array));
-                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
+                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING HAPPY, SAD]");
                 return false;
             } else if (array.size() == 1) {
                 System.out.printf("The property [%s] is wrong.\n", String.join(", ", array));
-                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
+                System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING HAPPY, SAD]");
                 return false;
             } else {
                 StringBuilder master = new StringBuilder();
@@ -76,7 +76,8 @@ public class Main {
                 }
                 if (master.toString().contains("ODD") && master.toString().contains("EVEN") ||
                         master.toString().contains("SUNNY") && master.toString().contains("SQUARE") ||
-                        master.toString().contains("DUCK") && master.toString().contains("SPY")) {
+                        master.toString().contains("DUCK") && master.toString().contains("SPY") ||
+                        master.toString().contains("HAPPY") && master.toString().contains("SAD")) {
                     System.out.printf("""
                             The request contains mutually exclusive properties: [%s, %s]
                             There are no numbers with these properties.
