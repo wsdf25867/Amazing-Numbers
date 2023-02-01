@@ -30,4 +30,31 @@ public class NumberGenerator {
         }
         return null;
     }
+
+    public static Number generate(long preNum, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3) {
+        for (long i = preNum; i < Long.MAX_VALUE; i++) {
+            if (Property.valueOf(toUpperCase).check(i) &&
+                    Property.valueOf(toUpperCase1).check(i) &&
+                    Property.valueOf(toUpperCase2).check(i) &&
+                    Property.valueOf(toUpperCase3).check(i)
+            ) {
+                return new Number(i);
+            }
+        }
+        return null;
+    }
+
+    public static Number generate(long preNum, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3, String toUpperCase4) {
+        for (long i = preNum; i < Long.MAX_VALUE; i++) {
+            if (Property.valueOf(toUpperCase).check(i) &&
+                    Property.valueOf(toUpperCase1).check(i) &&
+                    Property.valueOf(toUpperCase2).check(i) &&
+                    Property.valueOf(toUpperCase3).check(i) &&
+                    Property.valueOf(toUpperCase4).check(i)
+            ) {
+                return new Number(i);
+            }
+        }
+        return null;
+    }
 }

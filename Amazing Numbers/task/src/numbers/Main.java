@@ -30,17 +30,8 @@ public class Main {
             if (!validate(value)) {
                 continue;
             }
-            if (value.length == 5) {
-                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase(), value[4].toUpperCase());
-                numbers.print();
-            }else if (value.length == 4) {
-                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase());
-                numbers.print();
-            } else if (value.length == 3) {
-                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase());
-                numbers.print();
-            } else if (value.length == 2) {
-                Numbers numbers = Numbers.of(Long.parseLong(value[0]), Long.parseLong(value[1]));
+             if (value.length >= 2) {
+                Numbers numbers = Numbers.of(value);
                 numbers.print();
             } else {
                 Number number = new Number(Long.parseLong(value[0]));
@@ -65,11 +56,12 @@ public class Main {
             System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
             return false;
         }
-        if (value.length == 4) {
+        if (value.length >= 4) {
             List<String> array = new ArrayList<>();
-            if (!Property.contains(value[2])) array.add(value[2]);
-            if (!Property.contains(value[3])) array.add(value[3]);
-            if (array.size() == 2) {
+            for (int i = 2; i < value.length; i++) {
+                if (!Property.contains(value[i])) array.add(value[i]);
+            }
+            if (array.size() >= 2) {
                 System.out.printf("The properties [%s] are wrong.\n", String.join(", ", array));
                 System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
                 return false;
@@ -78,10 +70,13 @@ public class Main {
                 System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING]");
                 return false;
             } else {
-                String master = value[2].toUpperCase() + value[3].toUpperCase();
-                if (master.contains("ODD") && master.contains("EVEN") ||
-                        master.contains("SUNNY") && master.contains("SQUARE") ||
-                        master.contains("DUCK") && master.contains("SPY")) {
+                StringBuilder master = new StringBuilder();
+                for (int i = 2 ; i < value.length ; i++){
+                    master.append(value[i].toUpperCase());
+                }
+                if (master.toString().contains("ODD") && master.toString().contains("EVEN") ||
+                        master.toString().contains("SUNNY") && master.toString().contains("SQUARE") ||
+                        master.toString().contains("DUCK") && master.toString().contains("SPY")) {
                     System.out.printf("""
                             The request contains mutually exclusive properties: [%s, %s]
                             There are no numbers with these properties.
