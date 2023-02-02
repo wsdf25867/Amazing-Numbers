@@ -2,6 +2,7 @@ package numbers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -30,7 +31,7 @@ public class Main {
             if (!validate(value)) {
                 continue;
             }
-             if (value.length >= 2) {
+            if (value.length >= 2) {
                 Numbers numbers = Numbers.of(value);
                 numbers.print();
             } else {
@@ -70,25 +71,105 @@ public class Main {
                 System.out.println("Available properties: [EVEN, ODD, BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SQUARE, SUNNY, JUMPING HAPPY, SAD]");
                 return false;
             } else {
-                StringBuilder master = new StringBuilder();
-                for (int i = 2 ; i < value.length ; i++){
-                    master.append(value[i].toUpperCase());
+                                        int len = Property.values().length;
+                int[] positive = new int[len];
+                int[] negative = new int[len];
+                for (int i = 2; i < value.length; i++) {
+                    String temp = value[i].toUpperCase();
+                    for (int j = 0; j < len; j++) {
+                        if (temp.startsWith("-")) {
+                            if (Objects.equals(temp.substring(1), Property.values()[j].name())) {
+                                negative[j]++;
+                                break;
+                            }
+                        } else {
+                            if (Objects.equals(temp, Property.values()[j].name())) {
+                                positive[j]++;
+                                break;
+                            }
+                        }
+                    }
                 }
-                if (master.toString().contains("ODD") && master.toString().contains("EVEN") ||
-                        master.toString().contains("SUNNY") && master.toString().contains("SQUARE") ||
-                        master.toString().contains("DUCK") && master.toString().contains("SPY") ||
-                        master.toString().contains("HAPPY") && master.toString().contains("SAD")) {
+
+                for (int i = 0; i < len; i++) {
+                    if (positive[i] == negative[i] && positive[i] > 0 && negative[i] > 0) {
+                        System.out.printf("""
+                                The request contains mutually exclusive properties: [%s, %s]
+                                There are no numbers with these properties.
+                                                            
+        """, "-" + Property.values()[i], Property.values()[i]);
+                        return false;
+                    }
+                }
+                if (positive[5] == positive[6] && positive[5] > 0) {
                     System.out.printf("""
                             The request contains mutually exclusive properties: [%s, %s]
                             There are no numbers with these properties.
                                                         
-                            """, value[2], value[3]);
+                            """, Property.values()[5], Property.values()[6]);
+                    return false;
+                }
+                if (positive[7] == positive[8] && positive[7] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, Property.values()[7], Property.values()[8]);
+                    return false;
+                }
+                if (positive[1] == positive[4] && positive[1] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, Property.values()[1], Property.values()[4]);
+                    return false;
+                }
+                if (positive[10] == positive[11] && positive[10] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, Property.values()[10], Property.values()[11]);
+                    return false;
+                }
+                if (negative[5] == negative[6] && negative[5] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, "-" + Property.values()[5], "-" + Property.values()[6]);
+                    return false;
+                }
+                if (negative[7] == negative[8] && negative[7] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, "-" + Property.values()[7], "-" + Property.values()[8]);
+                    return false;
+                }
+                if (negative[1] == negative[4] && negative[1] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, "-" + Property.values()[1], "-" + Property.values()[4]);
+                    return false;
+                }
+                if (negative[10] == negative[11] && negative[10] > 0) {
+                    System.out.printf("""
+                            The request contains mutually exclusive properties: [%s, %s]
+                            There are no numbers with these properties.
+                                                        
+                            """, "-" + Property.values()[10], "-" + Property.values()[11]);
                     return false;
                 }
             }
         }
         return true;
     }
+
 
     private static boolean isNatural(String value) {
         return Pattern.compile("[0-9]")

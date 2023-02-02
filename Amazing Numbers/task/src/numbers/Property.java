@@ -1,5 +1,6 @@
 package numbers;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public enum Property {
@@ -90,7 +91,7 @@ public enum Property {
         for (Property value : Property.values()) {
             if (property.equals(value.name()) ||
                     property.equals(value.lowerCase) ||
-                    property.equals(value.opposite)) {
+                    property.toLowerCase().equals(value.opposite)) {
                 return true;
             }
         }

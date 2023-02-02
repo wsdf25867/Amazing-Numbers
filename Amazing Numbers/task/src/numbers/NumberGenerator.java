@@ -6,7 +6,7 @@ public class NumberGenerator {
             int count = 0;
             for (String property : properties) {
                 if (property.startsWith("-")) {
-                    if (Property.valueOf(property.substring(1)).checkNot(i))count++;
+                    if (Property.valueOf(property.substring(1).toUpperCase()).checkNot(i))count++;
                 } else {
                     if (Property.valueOf(property.toUpperCase()).check(i)) count++;
                 }

@@ -954,14 +954,13 @@ files:
             }
             return instance;
         }
-
         public static Numbers of(long start, long count, String property) {
             List<Number> instance = new ArrayList<>();
             long preNum = start;
             while (instance.size() < count) {
                 Number number = NumberGenerator.generate(preNum, property);
                 instance.add(number);
-                preNum = number.get() + 1;
+                preNum = number.get()+1;
             }
             return new Numbers(instance);
         }
@@ -972,7 +971,7 @@ files:
             while (instance.size() < count) {
                 Number number = NumberGenerator.generate(preNum, firstProperty, secondProperty);
                 instance.add(number);
-                preNum = number.get() + 1;
+                preNum = number.get()+1;
             }
             return new Numbers(instance);
         }
@@ -983,45 +982,7 @@ files:
             while (instance.size() < count) {
                 Number number = NumberGenerator.generate(preNum, firstProperty, secondProperty, thirdProperty);
                 instance.add(number);
-                preNum = number.get() + 1;
-            }
-            return new Numbers(instance);
-        }
-
-        public static Numbers of(String[] value) {
-            int len = value.length;
-            return switch (len) {
-                case 2 -> of(Long.parseLong(value[0]), Long.parseLong(value[1]));
-                case 3 -> of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase());
-                case 4 ->
-                        of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase());
-                case 5 ->
-                        of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase(), value[4].toUpperCase());
-                case 6 ->
-                        of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase(), value[4].toUpperCase(), value[5].toUpperCase());
-                case 7 -> of(Long.parseLong(value[0]), Long.parseLong(value[1]), value[2].toUpperCase(), value[3].toUpperCase(), value[4].toUpperCase(), value[5].toUpperCase(), value[6].toUpperCase());
-                default -> throw new IllegalStateException("Unexpected value: " + len);
-            };
-        }
-
-        private static Numbers of(long parseLong, long parseLong1, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3, String toUpperCase4) {
-            List<Number> instance = new ArrayList<>();
-            long preNum = parseLong;
-            while (instance.size() < parseLong1) {
-                Number number = NumberGenerator.generate(preNum, toUpperCase, toUpperCase1, toUpperCase2, toUpperCase3, toUpperCase4);
-                instance.add(number);
-                preNum = number.get() + 1;
-            }
-            return new Numbers(instance);
-        }
-
-        private static Numbers of(long parseLong, long parseLong1, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3) {
-            List<Number> instance = new ArrayList<>();
-            long preNum = parseLong;
-            while (instance.size() < parseLong1) {
-                Number number = NumberGenerator.generate(preNum, toUpperCase, toUpperCase1, toUpperCase2, toUpperCase3);
-                instance.add(number);
-                preNum = number.get() + 1;
+                preNum = number.get()+1;
             }
             return new Numbers(instance);
         }
@@ -1029,7 +990,6 @@ files:
         private void add(Number number) {
             numbers.add(number);
         }
-
         public void print() {
             for (Number number : numbers) {
                 number.printSimply();
@@ -1154,33 +1114,6 @@ files:
             }
             return null;
         }
-
-        public static Number generate(long preNum, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3) {
-            for (long i = preNum; i < Long.MAX_VALUE; i++) {
-                if (Property.valueOf(toUpperCase).check(i) &&
-                        Property.valueOf(toUpperCase1).check(i) &&
-                        Property.valueOf(toUpperCase2).check(i) &&
-                        Property.valueOf(toUpperCase3).check(i)
-                ) {
-                    return new Number(i);
-                }
-            }
-            return null;
-        }
-
-        public static Number generate(long preNum, String toUpperCase, String toUpperCase1, String toUpperCase2, String toUpperCase3, String toUpperCase4) {
-            for (long i = preNum; i < Long.MAX_VALUE; i++) {
-                if (Property.valueOf(toUpperCase).check(i) &&
-                        Property.valueOf(toUpperCase1).check(i) &&
-                        Property.valueOf(toUpperCase2).check(i) &&
-                        Property.valueOf(toUpperCase3).check(i) &&
-                        Property.valueOf(toUpperCase4).check(i)
-                ) {
-                    return new Number(i);
-                }
-            }
-            return null;
-        }
     }
   learner_created: true
 - name: src/numbers/Number.java
@@ -1220,34 +1153,9 @@ files:
     \  }\n\n    public Long get() {\n        return this.value;\n    }\n}\n"
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13205#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #74
-
-    Expected 16 non blank lines but actual output contains 3 lines.
-
-    Please find below the output of your program during this failed test.
-    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
-
-    ---
-
-    Welcome to Amazing Numbers!
-
-    Supported requests:
-    - enter a natural number to know its properties;
-    - enter two natural numbers to obtain the properties of the list:
-      * the first parameter represents a starting number;
-      * the second parameter shows how many consecutive numbers are to be printed;
-    - two natural numbers and properties to search for;
-    - a property preceded by minus must not be present in numbers;
-    - separate the parameters with one space;
-    - enter 0 to exit.
-
-    Enter a request: &gt; 1 15 odd spy -duck spy buzz
-    The request contains mutually exclusive properties: [odd, spy]
-    There are no numbers with these properties.
-
-    Enter a request:
-  time: "Wed, 01 Feb 2023 16:02:50 UTC"
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: "Thu, 02 Feb 2023 04:18:58 UTC"
 record: -1
